@@ -32,7 +32,7 @@ public class Post implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Reply> replies = new ArrayList<>();
 
 }

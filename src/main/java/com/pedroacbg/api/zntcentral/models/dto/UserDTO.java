@@ -1,5 +1,6 @@
 package com.pedroacbg.api.zntcentral.models.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pedroacbg.api.zntcentral.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,6 +26,7 @@ public class UserDTO implements Serializable {
     @Email(message = "Insert a valid email")
     private String email;
 
+    @JsonIgnore
     Set<RoleDTO> roles = new HashSet<>();
 
     public UserDTO(User entity){
