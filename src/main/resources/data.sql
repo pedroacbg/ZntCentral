@@ -1,6 +1,6 @@
-INSERT INTO tb_user (nickname, email, password) VALUES ('Gilese', 'gilese@gmail.com', 'c2VuaGExMjM0NTY3ODk=');
-INSERT INTO tb_user (nickname, email, password) VALUES ('Junio Logueiro', 'juninlogueiro@gmail.com', 'c2VuaGExMjM0NTY3ODk=');
-INSERT INTO tb_user (nickname, email, password) VALUES ('João Molenga', 'molenga@gmail.com', 'c2VuaGExMjM0NTY3ODk=');
+INSERT INTO tb_user (nickname, email, password) VALUES ('Gilese', 'gilese@gmail.com', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG');
+INSERT INTO tb_user (nickname, email, password) VALUES ('Junio Logueiro', 'juninlogueiro@gmail.com', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG');
+INSERT INTO tb_user (nickname, email, password) VALUES ('João Molenga', 'molenga@gmail.com', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG');
 
 INSERT INTO tb_role (authority) VALUES ('ROLE_MEMBER');
 INSERT INTO tb_role (authority) VALUES ('ROLE_ADMIN');
