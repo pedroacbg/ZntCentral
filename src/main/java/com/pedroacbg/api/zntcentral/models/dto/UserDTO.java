@@ -15,10 +15,12 @@ public class UserDTO implements Serializable {
 
     private Long id;
     private String nickname;
+    private String email;
 
     public UserDTO(User entity){
         id = entity.getId();
         nickname = entity.getNickname();
+        email = entity.getEmail();
     }
 
 }
