@@ -11,5 +11,12 @@ INSERT INTO tb_user_role (user_id, role_id) VALUES (3, 1);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (3, 2);
 
 INSERT INTO tb_post (text, post_date, user_id) VALUES ('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse egestas lobortis tortor, in mollis enim. Aliquam erat volutpat. Aliquam erat volutpat. ', TIMESTAMP WITH TIME ZONE '2022-01-15T13:00:00Z', 1);
+INSERT INTO tb_post (text, post_date, user_id) VALUES ('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse egestas lobortis tortor, in mollis enim. Aliquam erat volutpat. Aliquam erat volutpat. ', TIMESTAMP WITH TIME ZONE '2022-01-15T13:00:00Z', 2);
+
 
 INSERT INTO tb_reply (text, post_id) VALUES ('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse egestas lobortis tortor, in mollis enim. Aliquam erat volutpat. Aliquam erat volutpat.', 1);
+INSERT INTO tb_reply (text, post_id) VALUES ('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse egestas lobortis tortor, in mollis enim. Aliquam erat volutpat. Aliquam erat volutpat.', 1);
+INSERT INTO tb_reply (text, post_id) VALUES ('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse egestas lobortis tortor, in mollis enim. Aliquam erat volutpat. Aliquam erat volutpat.', 2);
+INSERT INTO tb_reply (text, post_id) VALUES ('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse egestas lobortis tortor, in mollis enim. Aliquam erat volutpat. Aliquam erat volutpat.', 2);
+INSERT INTO tb_reply (text, post_id) VALUES ('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse egestas lobortis tortor, in mollis enim. Aliquam erat volutpat. Aliquam erat volutpat.', 2);
+INSERT INTO tb_reply (text, post_id) VALUES ('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse egestas lobortis tortor, in mollis enim. Aliquam erat volutpat. Aliquam erat volutpat.', 2);
