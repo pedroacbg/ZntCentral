@@ -2,6 +2,7 @@ package com.pedroacbg.api.zntcentral.services;
 
 import com.pedroacbg.api.zntcentral.models.Post;
 import com.pedroacbg.api.zntcentral.models.Reply;
+import com.pedroacbg.api.zntcentral.models.User;
 import com.pedroacbg.api.zntcentral.models.dto.PostDTO;
 import com.pedroacbg.api.zntcentral.models.dto.ReplyDTO;
 import com.pedroacbg.api.zntcentral.respositories.PostRepository;
@@ -32,21 +33,29 @@ public class PostService {
     @Autowired
     private ReplyRepository replyRepository;
 
-    @Transactional(readOnly = true)
-    public Page<PostDTO> findAll(Pageable pageable){
-        Page<Post> list = postRepository.findAll(pageable);
-        return list.map(x -> new PostDTO(x));
-    }
+    @Autowired
+    private AuthService authService;
 
     @Transactional(readOnly = true)
     public PostDTO findById(Long id){
+        User user = authService.authenticated();
+        authService.validadeAdmin(user.getId());
         Optional<Post> obj = postRepository.findById(id);
         Post entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
         return new PostDTO(entity);
     }
 
+    @Transactional(readOnly = true)
+    public Page<PostDTO> postsForCurrentUser(Pageable pageable){
+        User user = authService.authenticated();
+        Page<Post> page = postRepository.findByUser(user, pageable);
+        return page.map(x -> new PostDTO(x));
+    }
+
     @Transactional
     public PostDTO insert(PostDTO dto){
+        User user = authService.authenticated();
+        authService.validadeUserLogged(user.getId());
         Post entity = new Post();
         copyDtoToEntity(dto, entity);
         entity = postRepository.save(entity);
@@ -55,6 +64,8 @@ public class PostService {
 
     @Transactional
     public PostDTO update(Long id, PostDTO dto){
+        User user = authService.authenticated();
+        authService.validadeSelfOrAdmin(postRepository.getOne(id).getUser().getId());
         try{
             Post entity = postRepository.getOne(id);
             copyDtoToEntity(dto, entity);
@@ -66,6 +77,8 @@ public class PostService {
     }
 
     public void delete(Long id){
+        User user = authService.authenticated();
+        authService.validadeAdmin(user.getId());
         try{
             postRepository.deleteById(id);
         }catch (EmptyResultDataAccessException e){

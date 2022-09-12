@@ -11,7 +11,6 @@ import com.pedroacbg.api.zntcentral.services.exceptions.DatabaseException;
 import com.pedroacbg.api.zntcentral.services.exceptions.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -41,14 +40,20 @@ public class UserService implements UserDetailsService {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Autowired
+    private AuthService authService;
+
     @Transactional(readOnly = true)
     public Page<UserDTO> findAll(Pageable pageable){
+        User user = authService.authenticated();
+        authService.validadeAdmin(user.getId());
         Page<User> list = userRepository.findAll(pageable);
         return list.map(x -> new UserDTO(x));
     }
 
     @Transactional(readOnly = true)
     public UserDTO findById(Long id){
+        authService.validadeSelfOrAdmin(id);
         Optional<User> obj = userRepository.findById(id);
         User entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
         return new UserDTO(entity);
@@ -56,6 +61,8 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public UserDTO insert(UserInsertDTO dto){
+        User user = authService.authenticated();
+        authService.validadeAdmin(user.getId());
         User entity = new User();
         copyDtoToEntity(dto, entity);
         entity.setPassword(passwordEncoder.encode(dto.getPassword()));
@@ -65,6 +72,7 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public UserDTO update(Long id, UserDTO dto){
+        authService.validadeSelfOrAdmin(id);
         try{
             User entity = userRepository.getOne(id);
             copyDtoToEntity(dto, entity);
@@ -76,6 +84,8 @@ public class UserService implements UserDetailsService {
     }
 
     public void delete(Long id){
+        User user = authService.authenticated();
+        authService.validadeAdmin(user.getId());
         try{
             userRepository.deleteById(id);
         }catch (EmptyResultDataAccessException e){

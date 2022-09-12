@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -25,15 +26,15 @@ public class PostController {
     @Autowired
     private ReplyService replyService;
 
-    @GetMapping
-    public ResponseEntity<Page<PostDTO>> findAll(Pageable pageable){
-        Page<PostDTO> list = postService.findAll(pageable);
-        return ResponseEntity.ok().body(list);
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<PostDTO> findById(@PathVariable Long id){
         return ResponseEntity.ok().body(postService.findById(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<PostDTO>> postForCurrentUser(Pageable pageable){
+        Page<PostDTO> page = postService.postsForCurrentUser(pageable);
+        return ResponseEntity.ok().body(page);
     }
 
     @PostMapping

@@ -1,6 +1,7 @@
 package com.pedroacbg.api.zntcentral.services;
 
 import com.pedroacbg.api.zntcentral.models.Reply;
+import com.pedroacbg.api.zntcentral.models.User;
 import com.pedroacbg.api.zntcentral.models.dto.ReplyDTO;
 import com.pedroacbg.api.zntcentral.respositories.PostRepository;
 import com.pedroacbg.api.zntcentral.respositories.ReplyRepository;
@@ -22,6 +23,9 @@ public class ReplyService {
     @Autowired
     private PostRepository postRepository;
 
+    @Autowired
+    private AuthService authService;
+
     @Transactional(readOnly = true)
     public List<ReplyDTO> findAll(Long postId){
         List<Reply> list = replyRepository.findReplies(postId);
@@ -30,6 +34,8 @@ public class ReplyService {
 
     @Transactional
     public ReplyDTO insert(ReplyDTO dto){
+        User user = authService.authenticated();
+        authService.validadeUserLogged(user.getId());
         Reply entity = new Reply();
         copyDtoToEntity(dto, entity);
         entity = replyRepository.save(entity);
@@ -38,6 +44,8 @@ public class ReplyService {
 
    @Transactional
     public ReplyDTO update(Long id, ReplyDTO dto){
+       User user = authService.authenticated();
+       authService.validadeSelfOrAdmin(replyRepository.getOne(id).getPost().getUser().getId());
         try{
             Reply entity = replyRepository.getOne(id);
             copyDtoToEntity(dto, entity);
