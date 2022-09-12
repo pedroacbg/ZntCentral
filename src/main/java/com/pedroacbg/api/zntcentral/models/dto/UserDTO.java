@@ -26,7 +26,6 @@ public class UserDTO implements Serializable {
     @Email(message = "Insert a valid email")
     private String email;
 
-    @JsonIgnore
     Set<RoleDTO> roles = new HashSet<>();
 
     public UserDTO(User entity){

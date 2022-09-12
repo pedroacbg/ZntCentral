@@ -18,9 +18,11 @@ public class ReplyDTO implements Serializable {
 
     @NotBlank(message = "Cannot be empty")
     private String text;
+    private Long postId;
 
     public ReplyDTO(Reply entity){
         id = entity.getId();
         text = entity.getText();
+        postId = entity.getPost().getId();
     }
 }

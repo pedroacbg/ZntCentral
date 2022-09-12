@@ -2,15 +2,10 @@ package com.pedroacbg.api.zntcentral.services;
 
 import com.pedroacbg.api.zntcentral.models.Post;
 import com.pedroacbg.api.zntcentral.models.Reply;
-import com.pedroacbg.api.zntcentral.models.Role;
-import com.pedroacbg.api.zntcentral.models.User;
 import com.pedroacbg.api.zntcentral.models.dto.PostDTO;
 import com.pedroacbg.api.zntcentral.models.dto.ReplyDTO;
-import com.pedroacbg.api.zntcentral.models.dto.RoleDTO;
-import com.pedroacbg.api.zntcentral.models.dto.UserDTO;
 import com.pedroacbg.api.zntcentral.respositories.PostRepository;
 import com.pedroacbg.api.zntcentral.respositories.ReplyRepository;
-import com.pedroacbg.api.zntcentral.respositories.RoleRepository;
 import com.pedroacbg.api.zntcentral.respositories.UserRepository;
 import com.pedroacbg.api.zntcentral.services.exceptions.DatabaseException;
 import com.pedroacbg.api.zntcentral.services.exceptions.ResourceNotFoundException;
@@ -36,12 +31,6 @@ public class PostService {
 
     @Autowired
     private ReplyRepository replyRepository;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private RoleRepository roleRepository;
 
     @Transactional(readOnly = true)
     public Page<PostDTO> findAll(Pageable pageable){
@@ -89,7 +78,7 @@ public class PostService {
     private void copyDtoToEntity(PostDTO dto, Post entity) {
         entity.setText(dto.getText());
         entity.setPostDate(dto.getPostDate());
-        entity.setUser(userRepository.getOne(dto.getUser().getId()));
+        entity.setUser(userRepository.getOne(dto.getUserId()));
 
         entity.getReplies().clear();
         for(ReplyDTO replyDto : dto.getReplies()) {

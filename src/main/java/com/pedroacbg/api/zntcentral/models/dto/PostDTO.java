@@ -1,6 +1,8 @@
 package com.pedroacbg.api.zntcentral.models.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import com.pedroacbg.api.zntcentral.models.Post;
+import com.pedroacbg.api.zntcentral.models.Reply;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,15 +24,15 @@ public class PostDTO implements Serializable {
     @NotBlank(message = "Cannot be emtpy")
     private String text;
     private Instant postDate;
-    private UserDTO user;
-    Set<ReplyDTO> replies = new HashSet<>();
+    private Long userId;
+
+    private Set<ReplyDTO> replies = new HashSet<>();
 
     public PostDTO(Post entity){
         id = entity.getId();
         text = entity.getText();
         postDate = entity.getPostDate();
-        user  = new UserDTO(entity.getUser());
+        userId  = entity.getUser().getId();
         entity.getReplies().forEach(reply -> this.replies.add(new ReplyDTO(reply)));
     }
-
 }

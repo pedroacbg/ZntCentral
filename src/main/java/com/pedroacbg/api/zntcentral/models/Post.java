@@ -1,5 +1,6 @@
 package com.pedroacbg.api.zntcentral.models;
 
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
